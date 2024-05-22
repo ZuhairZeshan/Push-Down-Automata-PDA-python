@@ -1,0 +1,386 @@
+
+#This is a project of our Course Theory of Automata
+#Pumping Lemma Detector
+#It has all the things in it for pumping lemma and working with critical cases also.
+
+
+print("\n\n+++++++++++++++++ Pumping Lemma Of Regular Expressions ++++++++++++++++++\n")
+
+
+print("                           By Hamiz & Zuhair                              \n")
+
+inp1 = int(input("Enter number of variables = "))
+var2 = []  # a,b,c
+for i in range (0,int(inp1)):
+    print("Enter a Variable",int(int(i)+1),":")
+    temp=input()
+    var2.append(temp)
+
+if int(inp1) == 1:
+    print("Single Variable cannot be pumped\n")
+    exit()
+
+    
+flagging=0
+
+print("\n--------------------------------------------------------------")    
+unknown_var=[]
+unknown=input("Enter Number of Unknown Variables = ")
+for i in range(0,int(unknown)):
+    print("Enter Unknown",int(int(i)+1)," = ")
+    temp=input()
+    unknown_var.append(temp)
+            
+
+    
+print ("\n--------------------------Enter Powers-------------------------------")
+var = []
+var3=[]
+nu=0
+unknown2=0
+power=[]
+for i in range(0, int(inp1)):
+        print("Press 1 for Single Variable\nPress 2 for Double Variable:")
+        p=input()
+        power.append(p)
+        if int(p) == 1:
+            print("Write power for your Variable",int(int(i)+1), ":")
+            u = input()
+            var.append(u)
+            print("\n")
+        elif int(p) == 2:
+            print("Write power for your Variable",int(int(i)+1), ":")
+            temp= input()
+            symbol1=temp[0]
+            operator=temp[1]
+            symbol2=temp[2]
+
+            var3.append(symbol1)
+            #unknown=int(unknown)+1
+            var3.append(symbol2)
+            #unknown2=unknown
+            print("\n")
+
+
+power.append(0)
+power.append(0)
+
+
+#print(symbol1)
+#print(operator)
+#print(unknown)
+#print(symbol2)
+
+
+
+r=0
+num=0
+print("---------------------------------------------------------")
+cond = []
+check=[]
+for i in range(0,int(inp1)):
+    print("\nSelect a condition for unknown ",int(i)+1)
+    print("1) Greater equals \n2) Greater\n3) Dependency  Greater Equal\n4) Dependency  Greater")
+    r = input()
+    check.append(r)
+    num = input("Enter a number for your condition = ") # n > 0
+    cond.append(num)
+
+    
+    
+f=0;
+g=0;
+print("-----------------------------------------------------------")    
+print("Expresseion:")
+for i in range(0,int(inp1)):
+    if int(power[i]) == 1:
+        if i == int(int(inp1)-1):
+            print(var2[i],"^",var[g],unknown_var[i])
+            g=int(g)+1;
+        else:    
+            print(var2[i],"^",var[g],unknown_var[i],end=" * ")
+            g=int(g)+1;
+        
+    elif int(power[i]) == 2:
+        if i == int(int(inp1)-1):
+            print(var2[i],"^",var[f],unknown_var[i])
+            f=int(f)+1;
+        else:    
+            print(var2[i],"^",var3[f],unknown_var[i],end=" * ")
+            f=int(f)+1;
+    
+
+        
+          
+print("Conditions:")
+for i in range(0,int(inp1)):
+    if int(check[i]) == 1 :
+        print(unknown_var[i], ">=",cond[i])
+    elif int(check[i]) == 2 :
+        print(unknown_var[i], ">",cond[i])
+    elif int(check[i]) == 3 :####################dependency#############
+        print(unknown_var[i], ">=",cond[i])
+    elif int(check[i]) == 4:
+        print(unknown_var[i], ">",cond[i])
+
+f=0
+g=0
+print("------------------------------------------------------------")
+part1=""
+for i in range(0,int(unknown)):
+    if int(power[i]) == 1:
+        print("Enter Value of",unknown_var[i],"for the string:")
+        temp=input()
+        
+        if int(check[i]) == 1:
+            if int(temp) >= int(cond[i]):
+                pass
+            else:
+                print("\nYour input is not matching with required Condition")
+                exit()
+        elif int(check[i]) == 2:
+            if int(temp) > int(cond[i]):
+                pass
+            else:
+                print("\nYour input is not matching with required Condition")
+                exit()
+        elif int(check[i]) == 3:
+            b=cond[i-1]
+            m=cond[i-2]
+            j=unknown_var[1]
+            r=unknown_var[0]
+            
+            if int(power[1]) == 2:
+                if cond[i] == j[0]:
+                    if int(temp) >= int(b[0]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == j[2]:
+                    if int(temp) >= int(b[2]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                        
+            elif int(power[0]) == 2:
+                if cond[i] == m[0]:
+                    if int(temp) >= int(m[0]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == m[2]:
+                    if int(temp) >= m[2]:
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+            else:
+                if cond[i] == j:
+                    if int(temp) >= int(b):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == r:
+                    if int(temp) >= int(m):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+        elif int(check[i]) == 4:
+            b=cond[i-1]
+            m=cond[i-2]
+            j=unknown_var[1]
+            r=unknown_var[0]
+            
+            if int(power[1]) == 2:
+                if cond[i] == j[0]:
+                    if int(temp) > int(b[0]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == j[2]:
+                    if int(temp) > int(b[2]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                        
+            elif int(power[0]) == 2:
+                if cond[i] == m[0]:
+                    if int(temp) > int(m[0]):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == m[2]:
+                    if int(temp) > m[2]:
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+            else:
+                if cond[i] == j:
+                    if int(temp) > int(b):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                elif cond[i] == r:
+                    if int(temp) > int(m):
+                        pass
+                    else:
+                        print("\nYour input is not matching with required Condition")
+                        exit()
+                    
+        temp=int(temp)*int(var[g])
+        g=int(g)+1
+        for j in range(0,int(temp)):
+            part1+=str(var2[i])
+    elif int(power[i]) == 2:
+        print("Enter Value of",unknown_var[i],"for the string:")
+        temp=input()
+        temporary=cond[i]
+        
+        if int(check[i]) == 1:
+            if int(temp[0]) >= int(temporary[0]) and int(temp[2]) >= int(temporary[2]):
+                pass
+            else:
+                print("\nYour input is not matching with required Condition")
+                exit()
+        elif int(check[i]) == 2:
+            if int(temp[0]) > int(temporary[0]) and int(temp[2]) > int(temporary[0]):
+                pass
+            else:
+                print("\nYour input is not matching with required Condition")
+                exit() 
+        
+        
+        nu=len(temp)
+        temp=(int(temp[0])*int(var3[f]))+(int(temp[2])*int(var3[f+1]))
+        f=int(f)+1
+        for j in range(0,int(temp)):
+            part1+=str(var2[i])
+        
+
+
+
+        
+print("The String is = ",part1)
+    
+n=len(part1)
+x=""
+y=""
+z=""
+
+for i in range(0,n):
+    if part1[i] == var2[0]:
+        x+=part1[i]
+    elif part1[i] == var2[1]:
+        y+=part1[i]
+    elif part1[i] == var2[2]:
+        z+=part1[i]
+
+#print(x)
+#print(y)
+#print(z)
+
+
+print("-------------------------------------------------------------")
+print("Enter The max Value of i:")
+t=int(input())
+
+for i in range(0,int(t)):
+    if inp1>1:
+        new_str=x + y*i + z
+        print("\nThe pumped String ",int(i)+1," = ",new_str)
+        
+print("\n")
+
+
+#print(unknown)
+#print(inp1)
+#############################################################################################################
+
+if inp1 == 3:
+    if int(unknown) == 3:#########dependent######################
+        if int(power[0]) == 1 and int(power[1]) == 1 and int(power[2]) == 1:
+            if unknown_var[0] == unknown_var[1] or unknown_var[0] == unknown_var[2] or unknown_var[1] == unknown_var[2]:
+                print("Pumping Lemma is True")
+                print("Hence it is not a Regular Expression")
+            else:
+                print("Pumping Lemma is False")
+                print("Hence it is a Regular Expression")
+        else:
+            variable1=unknown_var[0]
+            variable2=unknown_var[1]
+            variable3=unknown_var[2]
+            if int(power[2]) == 2:
+                for h in range(0,3):
+                    if variable1 == variable2 or variable1 == variable3[h] or variable3[h] == variable2:
+                        print("Pumping Lemma is True")
+                        print("Hence it is not a Regular Expression")
+                        break;
+                    else:
+                        print("Pumping Lemma is False")
+                        print("Hence it is a Regular Expression")
+                        break;
+            elif int(power[1]) == 2: 
+                for h in range(0,3):
+                    if variable1 == variable2[h] or variable1 == variable3 or variable3 == variable2[h]:
+                        print("Pumping Lemma is True")
+                        print("Hence it is not a Regular Expression")
+                        break;
+                    else:
+                        print("Pumping Lemma is False")
+                        print("Hence it is a Regular Expression")
+                        break;
+            elif int(power[0]) == 2:
+                for h in range(0,3):
+                    if variable1[h] == variable2 or variable1[h] == variable3 or variable3 == variable2:
+                        print("Pumping Lemma is True")
+                        print("Hence it is not a Regular Expression")
+                        break;
+                    else:
+                        print("Pumping Lemma is False")
+                        print("Hence it is a Regular Expression")
+                        break;
+
+
+
+elif inp1 == 2:
+    if int(unknown) == 2:#########dependent######################
+        if int(power[0]) == 1 and int(power[1]) == 1:
+            if unknown_var[0] == unknown_var[1]:
+                print("Pumping Lemma is True")
+                print("Hence it is not a Regular Expression")
+            else:
+                print("Pumping Lemma is False")
+                print("Hence it is a Regular Expression")
+        else:
+            variable1=unknown_var[0]
+            variable2=unknown_var[1]
+            if int(power[1]) == 2: 
+                for h in range(0,3):
+                    if variable1 == variable2[h]:
+                        print("Pumping Lemma is True")
+                        print("Hence it is not a Regular Expression")
+                        break;
+                    else:
+                        print("Pumping Lemma is False")
+                        print("Hence it is a Regular Expression")
+                        break;
+            elif int(power[0]) == 2:
+                for h in range(0,3):
+                    if variable1[h] == variable2:
+                        print("Pumping Lemma is True")
+                        print("Hence it is not a Regular Expression")
+                        break;
+                    else:
+                        print("Pumping Lemma is False")
+                        print("Hence it is a Regular Expression")
+                        break;
